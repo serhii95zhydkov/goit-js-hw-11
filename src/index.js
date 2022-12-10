@@ -22,17 +22,31 @@ const apiService = new ApiService();
 function onSearchImages(event) {
   event.preventDefault();
 
+  clearGallery();
+
   apiService.query = event.currentTarget.elements.searchQuery.value;
+
+  if (apiService.query === '') {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return;
+  }
+
   apiService.resetPage();
 
-  apiService.fetchImages().then(appendImagesMarkup);
-};
+  apiService.fetchImages().then(appendImages);
+}
 
 function onLoadMore() {
-  apiService.fetchImages().then(appendImagesMarkup);
-};
+  apiService.fetchImages().then(appendImages);
+}
 
-function appendImagesMarkup(hits) {
+function appendImages(hits) {
   const markup = hits.map(getPhotoCard).join('');
-  refs.gallery.insertAdjacentHTML('beforeend', markup)
-};
+  refs.gallery.insertAdjacentHTML('beforeend', markup);
+}
+
+function clearGallery() {
+  refs.gallery.innerHTML = '';
+}
