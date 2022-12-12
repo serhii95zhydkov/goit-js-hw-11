@@ -10,7 +10,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
   form: document.querySelector('#search-form'),
-  loadMoreBtn: document.querySelector('.button'),
+  loadMoreBtn: document.querySelector('.load-more'),
   gallery: document.querySelector('.gallery'),
 };
 
@@ -19,8 +19,12 @@ refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 const apiService = new ApiService();
 
+onHideLoadMoreBtn();
+
 function onSearchImages(event) {
   event.preventDefault();
+
+  onHideLoadMoreBtn();
 
   clearGallery();
 
@@ -36,6 +40,9 @@ function onSearchImages(event) {
   apiService.resetPage();
 
   apiService.fetchImages().then(appendImages);
+
+  onShowLoadMoreBtn();
+
 }
 
 function onLoadMore() {
@@ -49,4 +56,12 @@ function appendImages(hits) {
 
 function clearGallery() {
   refs.gallery.innerHTML = '';
+}
+
+function onShowLoadMoreBtn() {
+  refs.loadMoreBtn.classList.remove('is-hidden');
+}
+
+function onHideLoadMoreBtn() {
+  refs.loadMoreBtn.classList.add('is-hidden');
 }
