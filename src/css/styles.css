@@ -5,8 +5,12 @@
     margin-bottom: 24px;
 }
 
-.button {
+.load-more {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.is-hidden {
+    display: none;
 }
