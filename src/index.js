@@ -52,6 +52,8 @@ function onLoadMore() {
 function appendImages(hits) {
   const markup = hits.map(getPhotoCard).join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
+  
+  lightbox.refresh();
 }
 
 function clearGallery() {
@@ -65,3 +67,9 @@ function onShowLoadMoreBtn() {
 function onHideLoadMoreBtn() {
   refs.loadMoreBtn.classList.add('is-hidden');
 }
+
+const lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: "alt",
+    captionPosition: "bottom",
+    captionDelay: 250,
+});
