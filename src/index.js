@@ -38,6 +38,7 @@ async function onSearchImages(event) {
   }
 
   apiService.resetPage();
+  refs.form.reset();
 
   try {
     const data = await apiService.fetchImages();
@@ -58,12 +59,12 @@ async function onSearchImages(event) {
 }
 
 async function onLoadMore() {
+  onSmoothScrolling(refs.gallery);
+  
   try {
     const data = await apiService.fetchImages();
 
     const array = await appendImages(data);
-
-    onShowLoadMoreBtn();
 
     return array;
   } catch (error) {
@@ -79,6 +80,13 @@ async function onLoadMore() {
 function appendImages(data) {
   const markup = data.hits.map(getPhotoCard).join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
+
+  if (data.hits.length === 0) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return;
+  }
 
   if (apiService.page === 2) {
     Notify.success(`Hooray! We found ${data.totalHits} images.`);
@@ -110,3 +118,13 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
   captionDelay: 250,
 });
+
+
+function onSmoothScrolling() {
+  const { height: cardHeight } = refs.gallery.firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
+}
