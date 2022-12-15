@@ -42,17 +42,26 @@ function onSearchImages(event) {
   apiService.fetchImages().then(appendImages);
 
   onShowLoadMoreBtn();
-
 }
 
 function onLoadMore() {
   apiService.fetchImages().then(appendImages);
 }
 
-function appendImages(hits) {
-  const markup = hits.map(getPhotoCard).join('');
+function appendImages(data) {
+  const markup = data.hits.map(getPhotoCard).join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
-  
+
+  if (apiService.page === 2) {
+    Notify.success(`Hooray! We found ${data.totalHits} images.`);
+  }
+
+  const totalPage = data.totalHits / 40;
+  if (apiService.page > totalPage) {
+    onHideLoadMoreBtn();
+    Notify.info(`We're sorry, but you've reached the end of search results.`);
+  }
+
   lightbox.refresh();
 }
 
@@ -69,7 +78,7 @@ function onHideLoadMoreBtn() {
 }
 
 const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: "alt",
-    captionPosition: "bottom",
-    captionDelay: 250,
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
 });
