@@ -21,9 +21,9 @@ export default class ApiService {
         }
         return response.json();
       })
-      .then(({ hits }) => {
+      .then(data => {
         this.incrementPage();
-        return hits;
+        return data;
       });
   }
 
@@ -42,4 +42,4 @@ export default class ApiService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-};
+}
