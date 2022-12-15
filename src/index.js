@@ -21,7 +21,7 @@ const apiService = new ApiService();
 
 onHideLoadMoreBtn();
 
-function onSearchImages(event) {
+async function onSearchImages(event) {
   event.preventDefault();
 
   onHideLoadMoreBtn();
@@ -39,13 +39,41 @@ function onSearchImages(event) {
 
   apiService.resetPage();
 
-  apiService.fetchImages().then(appendImages);
+  try {
+    const data = await apiService.fetchImages();
 
-  onShowLoadMoreBtn();
+    const array = await appendImages(data);
+
+    onShowLoadMoreBtn();
+
+    return array;
+  } catch (error) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return error;
+  }
+
+  // apiService.fetchImages().then(appendImages);
 }
 
-function onLoadMore() {
-  apiService.fetchImages().then(appendImages);
+async function onLoadMore() {
+  try {
+    const data = await apiService.fetchImages();
+
+    const array = await appendImages(data);
+
+    onShowLoadMoreBtn();
+
+    return array;
+  } catch (error) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return error;
+  }
+
+  // apiService.fetchImages().then(appendImages);
 }
 
 function appendImages(data) {
