@@ -12,6 +12,7 @@ const refs = {
   form: document.querySelector('#search-form'),
   loadMoreBtn: document.querySelector('.load-more'),
   gallery: document.querySelector('.gallery'),
+  scrollup: document.querySelector('.scrollup'),
 };
 
 refs.form.addEventListener('submit', onSearchImages);
@@ -19,6 +20,7 @@ refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 const apiService = new ApiService();
 
+onHideScrollup();
 onHideLoadMoreBtn();
 
 async function onSearchImages(event) {
@@ -46,6 +48,7 @@ async function onSearchImages(event) {
     const array = await appendImages(data);
 
     onShowLoadMoreBtn();
+    onShowScrollup();
 
     return array;
   } catch (error) {
@@ -60,7 +63,7 @@ async function onSearchImages(event) {
 
 async function onLoadMore() {
   onSmoothScrolling(refs.gallery);
-  
+
   try {
     const data = await apiService.fetchImages();
 
@@ -119,12 +122,20 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-
 function onSmoothScrolling() {
-  const { height: cardHeight } = refs.gallery.firstElementChild.getBoundingClientRect();
+  const { height: cardHeight } =
+    refs.gallery.firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
+
+function onShowScrollup() {
+  refs.scrollup.classList.remove('is-hidden');
+}
+
+function onHideScrollup() {
+  refs.scrollup.classList.add('is-hidden');
 }
