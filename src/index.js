@@ -45,10 +45,10 @@ async function onSearchImages(event) {
   try {
     const data = await apiService.fetchImages();
 
-    const array = await appendImages(data);
-
     onShowLoadMoreBtn();
     onShowScrollup();
+
+    const array = await appendImages(data);
 
     return array;
   } catch (error) {
@@ -85,6 +85,9 @@ function appendImages(data) {
   refs.gallery.insertAdjacentHTML('beforeend', markup);
 
   if (data.hits.length === 0) {
+    onHideLoadMoreBtn();
+    onHideScrollup();
+
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
