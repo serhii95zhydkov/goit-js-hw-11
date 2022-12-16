@@ -7,6 +7,8 @@ img {
 
 input {
   padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgb(250, 200, 100);
 }
 
 button {
@@ -61,11 +63,11 @@ button:focus {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  
+
   border-radius: 4px;
-  
+
   overflow: hidden;
-  
+
   background-color: rgb(120, 240, 120);
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
@@ -85,10 +87,10 @@ button:focus {
   position: fixed;
   right: 24px;
   bottom: 8px;
-  
+
   width: 36px;
   height: 36px;
-  
+
   background-color: rgb(250, 200, 100);
   border-radius: 50%;
 }
@@ -98,12 +100,12 @@ button:focus {
   position: absolute;
   top: 50%;
   left: 50%;
-  
+
   width: 20px;
   height: 20px;
-  
+
   transform: translate(-50%, -30%) rotate(45deg);
-  
+
   border-top: 5px solid rgb(120, 240, 120);
   border-left: 5px solid rgb(120, 240, 120);
 }
