@@ -30,7 +30,7 @@ async function onSearchImages(event) {
 
   clearGallery();
 
-  apiService.query = event.currentTarget.elements.searchQuery.value;
+  apiService.query = event.currentTarget.elements.searchQuery.value.trim();
 
   if (apiService.query === '') {
     Notify.failure(
