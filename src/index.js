@@ -98,10 +98,15 @@ function appendImages(data) {
     Notify.success(`Hooray! We found ${data.totalHits} images.`);
   }
 
-  const totalPage = data.totalHits / 40;
+  const hitsPerPage = 40;
+  const totalPage = Math.ceil(data.totalHits / hitsPerPage);
+
   if (apiService.page > totalPage) {
     onHideLoadMoreBtn();
     Notify.info(`We're sorry, but you've reached the end of search results.`);
+  } else if (data.totalHits === 0) {
+    onHideLoadMoreBtn();
+    Notify.info(`Sorry, but nothing was found for your query.`);
   }
 
   lightbox.refresh();
